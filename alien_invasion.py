@@ -26,7 +26,7 @@ class AlienInvasion:
         self.play_button = Button(self, "Play")
 
         self.stats = GameStats(self)
-        self.score_board=Scoreboard(self)
+        self.score_board = Scoreboard(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -120,10 +120,10 @@ class AlienInvasion:
         collision = pygame.sprite.groupcollide(
             self.bullets, self.aliens, True, True
         )
-        #计分
+        # 计分
         if collision:
             for aliens in collision.values():
-                self.stats.score+=self.settings.alien_points*len(aliens)
+                self.stats.score += self.settings.alien_points * len(aliens)
                 self.score_board.prep_score()
                 self.score_board.check_high_score()
         # 外星人被消灭之后会新建一群
@@ -132,7 +132,7 @@ class AlienInvasion:
             self._creat_fleet()
             # 增加游戏难度和等级
             self.settings.increase_speed()
-            self.stats.level+=1
+            self.stats.level += 1
             self.score_board.prep_level()
 
     def _fire_bullet(self):

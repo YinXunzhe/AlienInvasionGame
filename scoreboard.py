@@ -9,7 +9,7 @@ class Scoreboard:
 
     def __init__(self, ai_game):
         """初始化显示得分涉及的属性"""
-        self.ai_game=ai_game
+        self.ai_game = ai_game
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
         self.settings = ai_game.settings
@@ -26,9 +26,9 @@ class Scoreboard:
 
     def prep_score(self):
         """把得分转换为一幅渲染的图像"""
-        rounded_score=round(self.stats.score,-1)
+        rounded_score = round(self.stats.score, -1)
         score_str = "{:,}".format(rounded_score)
-        self.score_image = self.font.render("Score "+score_str, True,
+        self.score_image = self.font.render("Score " + score_str, True,
                                             self.text_color, self.settings.bg_color)
 
         # 在屏幕右上角显示得分
@@ -40,7 +40,7 @@ class Scoreboard:
         """把最高得分转换为一幅渲染的图像"""
         rounded_high_score = round(self.stats.high_score, -1)
         high_score_str = "{:,}".format(rounded_high_score)
-        self.high_score_image = self.font.render("High Score "+high_score_str, True,
+        self.high_score_image = self.font.render("High Score " + high_score_str, True,
                                                  self.text_color, self.settings.bg_color)
 
         # 在屏幕顶部中央显示最高得分
@@ -49,35 +49,33 @@ class Scoreboard:
         self.high_score_rect.top = 20
 
     def show_score(self):
-        self.screen.blit(self.score_image,self.score_rect)
-        self.screen.blit(self.high_score_image,self.high_score_rect)
-        self.screen.blit(self.level_image,self.level_rect)
+        self.screen.blit(self.score_image, self.score_rect)
+        self.screen.blit(self.high_score_image, self.high_score_rect)
+        self.screen.blit(self.level_image, self.level_rect)
         self.ships.draw(self.screen)
 
     def check_high_score(self):
         """检查是否诞生最高得分"""
-        if self.stats.score>self.stats.high_score:
-            self.stats.high_score=self.stats.score
+        if self.stats.score > self.stats.high_score:
+            self.stats.high_score = self.stats.score
             self.prep_high_score()
 
     def prep_level(self):
         """把等级转换为一幅渲染的图像"""
         level_str = str(self.stats.level)
-        self.level_image = self.font.render("Level "+level_str, True,
+        self.level_image = self.font.render("Level " + level_str, True,
                                             self.text_color, self.settings.bg_color)
 
         # 把等级放在得分下方
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
-        self.level_rect.top = self.score_rect.bottom+10
+        self.level_rect.top = self.score_rect.bottom + 10
 
     def prep_ships(self):
         """显示玩家拥有的飞船数量"""
-        self.ships=Group()
+        self.ships = Group()
         for ship_number in range(self.stats.ship_left):
-            ship=Ship(self.ai_game)
-            ship.rect.x=10+ship_number*ship.rect.width
-            ship.rect.y=10
+            ship = Ship(self.ai_game)
+            ship.rect.x = 10 + ship_number * ship.rect.width
+            ship.rect.y = 10
             self.ships.add(ship)
-
-
