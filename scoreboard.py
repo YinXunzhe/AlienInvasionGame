@@ -1,4 +1,7 @@
-import pygame.font
+import pygame
+from pygame.sprite import Group
+
+from ship import Ship
 
 
 class Scoreboard:
@@ -6,6 +9,7 @@ class Scoreboard:
 
     def __init__(self, ai_game):
         """初始化显示得分涉及的属性"""
+        self.ai_game=ai_game
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
         self.settings = ai_game.settings
@@ -14,10 +18,11 @@ class Scoreboard:
         # 显示得分信息时的字体设置
         self.text_color = (30, 30, 30)
         self.font = pygame.font.SysFont(None, 48)
-        # 准备初始得分和等级图像
+        # 准备初始得分、等级和所拥有的飞船图像
         self.prep_score()
         self.prep_high_score()
         self.prep_level()
+        self.prep_ships()
 
     def prep_score(self):
         """把得分转换为一幅渲染的图像"""
@@ -47,6 +52,7 @@ class Scoreboard:
         self.screen.blit(self.score_image,self.score_rect)
         self.screen.blit(self.high_score_image,self.high_score_rect)
         self.screen.blit(self.level_image,self.level_rect)
+        self.ships.draw(self.screen)
 
     def check_high_score(self):
         """检查是否诞生最高得分"""
@@ -64,3 +70,14 @@ class Scoreboard:
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom+10
+
+    def prep_ships(self):
+        """显示玩家拥有的飞船数量"""
+        self.ships=Group()
+        for ship_number in range(self.stats.ship_left):
+            ship=Ship(self.ai_game)
+            ship.rect.x=10+ship_number*ship.rect.width
+            ship.rect.y=10
+            self.ships.add(ship)
+
+

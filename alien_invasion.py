@@ -86,9 +86,10 @@ class AlienInvasion:
             # 重置游戏统计信息
             self.stats.reset_stats()
             self.stats.game_active = True
-            # 记分牌需要重新渲染
+            # 记分等指示牌需要重新渲染
             self.score_board.prep_score()
             self.score_board.prep_level()
+            self.score_board.prep_ships()
 
             # 清空余下的外星人和子弹
             self.aliens.empty()
@@ -202,8 +203,9 @@ class AlienInvasion:
     def _ship_hit(self):
         """响应飞船被外星人撞到"""
         if self.stats.ship_left > 0:
-            # 拥有的飞船数量减一
+            # 拥有的飞船数量减一并更新指示牌
             self.stats.ship_left -= 1
+            self.score_board.prep_ships()
 
             # 清空余下的子弹和外星人
             self.aliens.empty()
