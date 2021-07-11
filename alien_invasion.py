@@ -67,7 +67,7 @@ class AlienInvasion:
         elif event.key == pygame.K_q:
             sys.exit()
         elif event.key == pygame.K_SPACE:
-            if(self.stats.game_active):
+            if self.stats.game_active:
                 self._fire_bullet()
 
     def _check_keyup_events(self, event):
